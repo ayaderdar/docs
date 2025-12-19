@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>StepUp — Compétences</title>
+  <style>
+    :root{
+      --bg:#0b101a;
+      --panel:#0f1720;
+      --muted:#cbd4e1;
+      --accent:#f4c542;
+      --card-bg:#ffffff;
+      --card-text:#0b101a;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Inter, "Segoe UI", Roboto, sans-serif;
+      background:linear-gradient(180deg,var(--bg),#07101a 120%);
+      color:var(--muted);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      padding:28px;
+      min-height:100vh;
+    }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 20px 50px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1001;
+      background: rgba(10, 25, 41, 0.8);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(251, 191, 36, 0.1);
+      margin: -28px -28px 28px -28px;
+    }
+    
+    .logo-nav {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--accent);
+      text-decoration: none;
+    }
+    
+    .nav-links {
+      display: flex;
+      gap: 30px;
+      list-style: none;
+    }
+    
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-weight: 500;
+      transition: 0.3s;
+      position: relative;
+    }
+    
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(135deg, #f4c542 0%, #f59e0b 100%);
+      transition: 0.3s;
+    }
+    
+    .nav-links a:hover::after,
+    .nav-links a.active::after {
+      width: 100%;
+    }
+    
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--accent);
+    }
+    
+    .nav-btn {
+      background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+      color: var(--bg);
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(251, 191, 36, 0.3);
+    }
+    
+    .nav-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(251, 191, 36, 0.5);
+    }
+    
+    .nav-btn::after {
+      display: none;
+    }
+
+    .container{
+      max-width:1100px;
+      margin:80px auto 0;
+      animation: fadeIn 0.6s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    header{
+      display:flex;
+      align-items:center;
+      gap:16px;
+      margin-bottom:18px;
+      animation: slideDown 0.5s ease;
+    }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .logo {
+      display:flex;
+      gap:12px;
+      align-items:center;
+      transition: transform 0.3s ease;
+    }
+    .logo:hover { transform: scale(1.05); }
+    .logo img{ 
+      width:72px; 
+      height:auto; 
+      border-radius:8px; 
+      box-shadow: 0 4px 12px rgba(244, 197, 66, 0.2);
+      transition: box-shadow 0.3s ease;
+    }
+    .logo img:hover { box-shadow: 0 6px 20px rgba(244, 197, 66, 0.4); }
+    .brand { 
+      font-size:20px; 
+      font-weight:800; 
+      color:white;
+      transition: color 0.3s ease;
+    }
+    .brand:hover { color: var(--accent); }
+    .brand span{ color:var(--accent) }
+
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      margin-bottom:18px;
+      animation: slideUp 0.5s ease 0.1s both;
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .searchBox{
+      background:rgba(255,255,255,0.04);
+      padding:10px;
+      border-radius:12px;
+      display:flex;
+      gap:10px;
+      align-items:center;
+      width:100%;
+      border: 2px solid transparent;
+      transition: all 0.3s ease;
+    }
+    .searchBox:focus-within {
+      background:rgba(255,255,255,0.08);
+      border-color: var(--accent);
+      box-shadow: 0 4px 20px rgba(244, 197, 66, 0.15);
+    }
+    .searchBox svg {
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    .searchBox:focus-within svg {
+      transform: scale(1.1);
+      opacity: 1 !important;
+    }
+    input.search{
+      flex:1;
+      border:0;
+      outline:none;
+      background:transparent;
+      color:var(--muted);
+      padding:8px;
+      font-size:15px;
+      transition: color 0.3s ease;
+    }
+    input.search::placeholder {
+      transition: color 0.3s ease;
+    }
+    input.search:focus::placeholder {
+      color: rgba(203, 212, 225, 0.5);
+    }
+    .filters{
+      display:flex;
+      gap:10px;
+      align-items:center;
+    } 
+    .btn{
+      background:var(--accent);
+      color:black;
+      padding:8px 12px;
+      border-radius:10px;
+      font-weight:700;
+      border:none;
+      cursor:pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      transform: translate(-50%, -50%);
+      transition: width 0.4s ease, height 0.4s ease;
+    }
+    .btn:hover::before {
+      width: 300px;
+      height: 300px;
+    }
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(244, 197, 66, 0.4);
+    }
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    main{
+      margin-top:14px;
+    }
+
+    #resultsInfo {
+      color:var(--muted); 
+      margin-bottom:10px;
+      font-size: 14px;
+      animation: fadeIn 0.5s ease 0.2s both;
+    }
+    #count {
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+      gap:18px;
+    }
+
+    .card{
+      background:var(--card-bg);
+      color:var(--card-text);
+      border-radius:12px;
+      padding:16px;
+      box-shadow:0 8px 20px rgba(2,6,23,0.6);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      animation: cardFadeIn 0.5s ease both;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    @keyframes cardFadeIn {
+      from { 
+        opacity: 0; 
+        transform: translateY(20px) scale(0.95); 
+      }
+      to { 
+        opacity: 1; 
+        transform: translateY(0) scale(1); 
+      }
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(244, 197, 66, 0.1), transparent);
+      transition: left 0.5s ease;
+    }
+    .card:hover::before {
+      left: 100%;
+    }
+    .card:hover{ 
+      transform:translateY(-8px) scale(1.02); 
+      box-shadow:0 20px 40px rgba(2,6,23,0.8), 0 0 0 2px rgba(244, 197, 66, 0.2); 
+    }
+
+    /* Stagger animation for cards */
+    .card:nth-child(1) { animation-delay: 0.05s; }
+    .card:nth-child(2) { animation-delay: 0.1s; }
+    .card:nth-child(3) { animation-delay: 0.15s; }
+    .card:nth-child(4) { animation-delay: 0.2s; }
+    .card:nth-child(5) { animation-delay: 0.25s; }
+    .card:nth-child(6) { animation-delay: 0.3s; }
+    .card:nth-child(7) { animation-delay: 0.35s; }
+    .card:nth-child(8) { animation-delay: 0.4s; }
+    .card:nth-child(9) { animation-delay: 0.45s; }
+    .card:nth-child(10) { animation-delay: 0.5s; }
+    .card:nth-child(11) { animation-delay: 0.55s; }
+
+    .card-head{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      margin-bottom:10px;
+    }
+    .card h3{ 
+      margin:0; 
+      font-size:18px;
+      transition: color 0.3s ease;
+    }
+    .card:hover h3 {
+      color: var(--accent);
+    }
+    .meta{ 
+      font-size:13px; 
+      color:#47535f; 
+      margin-top:6px;
+      line-height: 1.5;
+      transition: color 0.3s ease;
+    }
+    .card:hover .meta {
+      color: #2a3440;
+    }
+
+    .badge{
+      background:var(--accent);
+      padding:6px 10px;
+      border-radius:999px;
+      font-weight:700;
+      color:black;
+      font-size:13px;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(244, 197, 66, 0.3);
+    }
+    .card:hover .badge {
+      transform: scale(1.1);
+      box-shadow: 0 4px 12px rgba(244, 197, 66, 0.5);
+    }
+
+    .empty{
+      text-align:center;
+      color:#9aa4b8;
+      padding:40px 0;
+      font-size:16px;
+      animation: fadeIn 0.5s ease;
+    }
+
+    footer{
+      margin-top:40px;
+      color:#9aa4b8;
+      font-size:14px;
+      text-align:center;
+      padding: 20px 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      animation: fadeIn 0.5s ease 0.3s both;
+    }
+
+    /* Smooth transitions for filtering */
+    .card.filtering {
+      animation: none;
+      transition: all 0.3s ease;
+    }
+
+    /* small screens */
+    @media (max-width:480px){
+      body { padding: 16px; }
+      nav { padding: 15px 20px; margin: -16px -16px 16px -16px; }
+      .nav-links { gap: 10px; font-size: 0.85rem; }
+      header{ flex-direction:column; align-items:flex-start; gap:8px; }
+      .topbar{ flex-direction:column; align-items:stretch; gap:8px; }
+      .filters { width: 100%; }
+      .btn { width: 100%; }
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav>
+    <a href="home.html" class="logo-nav">StepUp</a>
+    <ul class="nav-links">
+      <li><a href="home.html">Accueil</a></li>
+      <li><a href="competences.html" class="active">Compétences</a></li>
+      <li><a href="projets.html">Projets</a></li>
+      <li><a href="entreprises.html">Entreprises</a></li>
+      <li><a href="about.html">À propos</a></li>
+      <li><a href="login.html" class="nav-btn">Connexion</a></li>
+    </ul>
+  </nav>
+
+  <div class="container">
+    <header>
+      <div class="logo">
+        <img src="img.jpg" alt="StepUp Logo">
+        <div class="brand">Step<span>Up</span></div>
+      </div>
+      <div style="margin-left:auto; color:var(--muted)">© 2025</div>
+    </header>
+
+    <section class="topbar">
+      <div class="searchBox" role="search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="opacity:.7">
+          <path d="M21 21l-4.35-4.35" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
+          <circle cx="11" cy="11" r="6" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></circle>
+        </svg>
+        <input id="searchInput" class="search" placeholder="Recherche par nom ou catégorie..." autocomplete="off">
+        <button id="clearBtn" class="btn" title="Effacer">Effacer</button>
+      </div>
+      <div class="filters">
+        <button class="btn" id="showAll">Tout montrer</button>
+      </div>
+    </section>
+
+    <main>
+      <div id="resultsInfo">Résultats: <span id="count">0</span></div>
+
+      <div id="grid" class="grid" aria-live="polite">
+        <!-- cards injected by JS -->
+      </div>
+
+      <div id="empty" class="empty" style="display:none">Aucune compétence trouvée.</div>
+    </main>
+    
+    <footer>
+      © 2025 StepUp — Tous droits réservés
+    </footer>
+  </div>
+
+  <script>
+    // Data - easy to modify
+    const COMPETENCES = [
+      { name: "Python", category: "Programming", level: "Avancé", desc: "Scripting, automation, data." },
+      { name: "HTML & CSS", category: "Web", level: "Intermédiaire", desc: "Structure et style des pages web." },
+      { name: "JavaScript", category: "Web", level: "Intermédiaire", desc: "DOM, ES6+, fetch." },
+      { name: "Machine Learning", category: "AI", level: "Intermédiaire", desc: "Scikit-learn, modèles de base." },
+      { name: "SQL", category: "Database", level: "Intermédiaire", desc: "Requêtes, jointures." },
+      { name: "Git", category: "Tools", level: "Avancé", desc: "Branches, merge, rebase." },
+      { name: "UI/UX", category: "Design", level: "Débutant", desc: "Principes d'interface." },
+      { name: "Docker", category: "DevOps", level: "Débutant", desc: "Conteneurisation de base." },
+      { name: "C++", category: "Programming", level: "Débutant", desc: "Connaissances fondamentales." },
+      { name: "Graphic Design", category: "Design", level: "Intermédiaire", desc: "Photoshop, Illustrator, identité visuelle." },
+      { name: "Marketing", category: "Business", level: "Intermédiaire", desc: "Stratégie, réseaux sociaux, branding." }
+    ];
+
+    const grid = document.getElementById('grid');
+    const input = document.getElementById('searchInput');
+    const countEl = document.getElementById('count');
+    const emptyEl = document.getElementById('empty');
+    const clearBtn = document.getElementById('clearBtn');
+    const showAllBtn = document.getElementById('showAll');
+
+    function createCard(data){
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.dataset.name = data.name.toLowerCase();
+      card.dataset.category = data.category.toLowerCase();
+
+      const head = document.createElement('div');
+      head.className = 'card-head';
+
+      const h3 = document.createElement('h3');
+      h3.textContent = data.name;
+
+      const badge = document.createElement('div');
+      badge.className = 'badge';
+      badge.textContent = data.level;
+
+      head.appendChild(h3);
+      head.appendChild(badge);
+
+      const meta = document.createElement('div');
+      meta.className = 'meta';
+      meta.innerHTML = `<strong>Catégorie:</strong> ${data.category} &nbsp; • &nbsp; ${data.desc}`;
+
+      card.appendChild(head);
+      card.appendChild(meta);
+      return card;
+    }
+
+    function render(list){
+      grid.innerHTML = '';
+      if(!list.length){
+        emptyEl.style.display = 'block';
+        grid.style.display = 'none';
+      } else {
+        emptyEl.style.display = 'none';
+        grid.style.display = 'grid';
+        list.forEach(item => grid.appendChild(createCard(item)));
+      }
+      countEl.textContent = list.length;
+    }
+
+    function filter(q){
+      const s = q.trim().toLowerCase();
+      if(!s) return COMPETENCES.slice();
+      return COMPETENCES.filter(c => {
+        return c.name.toLowerCase().includes(s) || 
+               c.category.toLowerCase().includes(s) || 
+               (c.desc && c.desc.toLowerCase().includes(s));
+      });
+    }
+
+    // Events
+    input.addEventListener('input', e => {
+      render(filter(e.target.value));
+    });
+
+    clearBtn.addEventListener('click', () => {
+      input.value = '';
+      input.dispatchEvent(new Event('input'));
+      input.focus();
+    });
+
+    showAllBtn.addEventListener('click', () => {
+      input.value = '';
+      input.dispatchEvent(new Event('input'));
+      input.focus();
+    });
+
+    // Initial render
+    render(COMPETENCES.slice());
+  </script>
+</body>
+</html>

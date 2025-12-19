@@ -1,341 +1,569 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Accueil - StepUp</title>
-    <style>
-        @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
-        
-        :root {
-            --bg: #0b101a;
-            --accent: #f4c542;
-            --text-primary: #e2e8f0;
-            --text-secondary: #94a3b8;
-            --card-bg: rgba(26, 35, 50, 0.8);
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: "Inter", sans-serif;
-            background: linear-gradient(135deg, #0a1929 0%, #1a2332 50%, #0f1419 100%);
-            color: var(--text-primary);
-            min-height: 100vh;
-        }
-        
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            padding: 20px 50px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 1001;
-            background: rgba(10, 25, 41, 0.8);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(251, 191, 36, 0.1);
-        }
-        
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--accent);
-            text-decoration: none;
-        }
-        
-        .nav-links {
-            display: flex;
-            gap: 30px;
-            list-style: none;
-            align-items: center;
-        }
-        
-        .nav-links a {
-            color: var(--text-primary);
-            text-decoration: none;
-            font-weight: 500;
-            transition: 0.3s;
-            position: relative;
-        }
-        
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(135deg, #f4c542 0%, #f59e0b 100%);
-            transition: 0.3s;
-        }
-        
-        .nav-links a:hover::after,
-        .nav-links a.active::after {
-            width: 100%;
-        }
-        
-        .nav-links a:hover,
-        .nav-links a.active {
-            color: var(--accent);
-        }
-        
-        .nav-btn {
-            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
-            color: var(--bg);
-            padding: 10px 20px;
-            border-radius: 10px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(251, 191, 36, 0.3);
-        }
-        
-        .nav-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(251, 191, 36, 0.5);
-        }
-        
-        /* Hero Section */
-        .hero {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 150px 50px 80px;
-            text-align: center;
-            animation: fadeInUp 1s ease;
-        }
-        
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .hero h1 {
-            font-size: 4rem;
-            font-weight: 800;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            line-height: 1.2;
-        }
-        
-        .hero p {
-            font-size: 1.4rem;
-            color: var(--text-secondary);
-            max-width: 800px;
-            margin: 0 auto 40px;
-            line-height: 1.8;
-        }
-        
-        .cta-buttons {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            margin-top: 40px;
-        }
-        
-        .cta-btn {
-            padding: 15px 40px;
-            border-radius: 12px;
-            font-weight: 700;
-            font-size: 1.1rem;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-        
-        .cta-btn.primary {
-            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
-            color: var(--bg);
-            box-shadow: 0 4px 20px rgba(251, 191, 36, 0.4);
-        }
-        
-        .cta-btn.primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(251, 191, 36, 0.6);
-        }
-        
-        .cta-btn.secondary {
-            background: transparent;
-            color: var(--accent);
-            border: 2px solid var(--accent);
-        }
-        
-        .cta-btn.secondary:hover {
-            background: rgba(251, 191, 36, 0.1);
-            transform: translateY(-3px);
-        }
-        
-        /* Features Section */
-        .features {
-            max-width: 1200px;
-            margin: 80px auto;
-            padding: 0 50px;
-        }
-        
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-        
-        .feature-card {
-            background: var(--card-bg);
-            backdrop-filter: blur(20px);
-            padding: 40px 30px;
-            border-radius: 20px;
-            border: 1px solid rgba(251, 191, 36, 0.1);
-            text-align: center;
-            transition: all 0.3s ease;
-            animation: fadeInUp 1s ease;
-            animation-fill-mode: both;
-        }
-        
-        .feature-card:nth-child(1) { animation-delay: 0.2s; }
-        .feature-card:nth-child(2) { animation-delay: 0.3s; }
-        .feature-card:nth-child(3) { animation-delay: 0.4s; }
-        
-        .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(251, 191, 36, 0.15);
-            border-color: var(--accent);
-        }
-        
-        .feature-icon {
-            font-size: 4rem;
-            margin-bottom: 20px;
-        }
-        
-        .feature-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 15px;
-            color: var(--text-primary);
-        }
-        
-        .feature-description {
-            font-size: 1rem;
-            color: var(--text-secondary);
-            line-height: 1.6;
-        }
-        
-        footer {
-            margin-top: 80px;
-            color: #9aa4b8;
-            font-size: 14px;
-            text-align: center;
-            padding: 20px 0;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        
-        @media (max-width: 768px) {
-            nav {
-                padding: 15px 20px;
-            }
-            
-            .nav-links {
-                gap: 10px;
-                font-size: 0.85rem;
-            }
-            
-            .nav-btn {
-                padding: 8px 15px;
-                font-size: 0.85rem;
-            }
-            
-            .hero {
-                padding: 120px 20px 60px;
-            }
-            
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-            
-            .hero p {
-                font-size: 1.1rem;
-            }
-            
-            .cta-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .cta-btn {
-                width: 100%;
-                max-width: 300px;
-            }
-            
-            .features {
-                padding: 0 20px;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StepUp — Accueil</title> 
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #0b101a 0%, #1a2332 50%, #0f1419 100%);
+      color: white;
+      overflow-x: hidden;
+    }
+
+    /* Animated background particles */
+    body::before {
+      content: '';
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        radial-gradient(circle at 20% 50%, rgba(244, 197, 66, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(30, 58, 95, 0.1) 0%, transparent 50%);
+      animation: float 20s ease-in-out infinite;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0); }
+      50% { transform: translate(20px, 20px); }
+    }
+
+    /* HEADER */
+    header {
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(10, 15, 26, 0.8);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(244, 197, 66, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      animation: slideDown 0.6s ease;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-100%);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .logo-box {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: transform 0.3s ease;
+    }
+
+    .logo-box:hover {
+      transform: scale(1.05);
+    }
+
+    .logo-img {
+      width: 110px;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgba(244, 197, 66, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .logo-img:hover {
+      box-shadow: 0 6px 25px rgba(244, 197, 66, 0.5);
+      transform: rotate(5deg);
+    }
+
+    .logo-title {
+      font-size: 32px;
+      font-weight: 700;
+      transition: color 0.3s ease;
+    }
+
+    .logo-title:hover {
+      color: #f4c542;
+    }
+
+    .logo-title span {
+      color: #f4c542;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    nav a {
+      color: #cbd4e1;
+      margin-left: 20px;
+      text-decoration: none;
+      font-weight: 600;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(135deg, #f4c542 0%, #f59e0b 100%);
+      transition: width 0.3s ease;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    nav a:hover {
+      color: #f4c542;
+      transform: translateY(-2px);
+    }
+
+    .btn-login {
+      background: linear-gradient(135deg, #f4c542 0%, #f59e0b 100%);
+      color: black !important;
+      padding: 10px 24px;
+      border-radius: 25px;
+      font-weight: 600;
+      box-shadow: 0 4px 15px rgba(244, 197, 66, 0.3);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-login::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      transform: translate(-50%, -50%);
+      transition: width 0.5s ease, height 0.5s ease;
+    }
+
+    .btn-login:hover::before {
+      width: 300px;
+      height: 300px;
+    }
+
+    .btn-login:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 25px rgba(244, 197, 66, 0.5);
+    }
+
+    /* HERO SECTION */
+    .hero {
+      text-align: center;
+      padding: 80px 20px;
+      background: transparent;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero h1 {
+      font-size: 48px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #ffffff 0%, #f4c542 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: fadeInUp 0.8s ease;
+      margin-bottom: 15px;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero p {
+      color: #cbd4e1;
+      margin-top: 10px;
+      font-size: 20px;
+      animation: fadeInUp 0.8s ease 0.2s both;
+    }
+
+    .btn-start {
+      margin-top: 40px;
+      background: linear-gradient(135deg, #f4c542 0%, #f59e0b 100%);
+      border: none;
+      padding: 18px 40px;
+      font-size: 18px;
+      border-radius: 50px;
+      cursor: pointer;
+      font-weight: 700;
+      color: black;
+      box-shadow: 0 6px 25px rgba(244, 197, 66, 0.4);
+      transition: all 0.3s ease;
+      animation: fadeInUp 0.8s ease 0.4s both;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-start::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s ease, height 0.6s ease;
+    }
+
+    .btn-start:hover::before {
+      width: 400px;
+      height: 400px;
+    }
+
+    .btn-start:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 10px 35px rgba(244, 197, 66, 0.6);
+    }
+
+    .btn-start:active {
+      transform: translateY(-2px) scale(1.02);
+    }
+
+    /* CARDS */
+    .cards {
+      margin-top: 60px;
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+      padding: 0 20px;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.95);
+      width: 280px;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+      color: #0b101a;
+      text-align: center;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      animation: cardFadeIn 0.6s ease both;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .card:nth-child(1) { animation-delay: 0.6s; }
+    .card:nth-child(2) { animation-delay: 0.8s; }
+    .card:nth-child(3) { animation-delay: 1s; }
+
+    @keyframes cardFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(40px) scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(244, 197, 66, 0.2), transparent);
+      transition: left 0.6s ease;
+    }
+
+    .card:hover::before {
+      left: 100%;
+    }
+
+    .card:hover {
+      transform: translateY(-15px) scale(1.05);
+      box-shadow: 0 15px 45px rgba(244, 197, 66, 0.4);
+      border: 2px solid rgba(244, 197, 66, 0.3);
+    }
+
+    .card img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      transition: all 0.4s ease;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .card:hover img {
+      transform: scale(1.15) rotate(10deg);
+      box-shadow: 0 6px 25px rgba(244, 197, 66, 0.5);
+    }
+
+    .card h3 {
+      margin: 20px 0 10px;
+      font-size: 22px;
+      font-weight: 700;
+      transition: color 0.3s ease;
+    }
+
+    .card:hover h3 {
+      color: #f4c542;
+    }
+
+    .card p {
+      font-size: 15px;
+      color: #555;
+      line-height: 1.6;
+      transition: color 0.3s ease;
+    }
+
+    .card:hover p {
+      color: #333;
+    }
+
+    /* CONTACT */
+    .contact {
+      margin: 80px auto;
+      max-width: 800px;
+      padding: 40px;
+      background: rgba(26, 35, 50, 0.8);
+      backdrop-filter: blur(20px);
+      border-radius: 20px;
+      text-align: center;
+      border: 1px solid rgba(244, 197, 66, 0.2);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      animation: fadeInUp 1s ease 1.2s both;
+      transition: all 0.3s ease;
+    }
+
+    .contact:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 50px rgba(244, 197, 66, 0.3);
+      border-color: rgba(244, 197, 66, 0.5);
+    }
+
+    .contact h3 {
+      margin-bottom: 20px;
+      font-size: 28px;
+      color: #f4c542;
+    }
+
+    .contact p {
+      font-size: 16px;
+      color: #cbd4e1;
+      margin: 10px 0;
+      transition: all 0.3s ease;
+    }
+
+    .contact p:hover {
+      color: #f4c542;
+      transform: translateX(5px);
+    }
+
+    .contact strong {
+      color: #f4c542;
+      font-weight: 600;
+    }
+
+    /* FOOTER */
+    footer {
+      background: rgba(10, 15, 26, 0.9);
+      padding: 30px;
+      text-align: center;
+      color: #9aa4b8;
+      border-top: 1px solid rgba(244, 197, 66, 0.1);
+      animation: fadeIn 1s ease 1.4s both;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        gap: 15px;
+        padding: 20px;
+      }
+
+      nav {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      nav a {
+        margin: 0;
+      }
+
+      .hero h1 {
+        font-size: 36px;
+      }
+
+      .hero p {
+        font-size: 18px;
+      }
+
+      .cards {
+        gap: 20px;
+      }
+
+      .card {
+        width: 100%;
+        max-width: 320px;
+      }
+
+      .contact {
+        margin: 40px 20px;
+        padding: 30px 20px;
+      }
+    }
+
+    /* Scroll animations */
+    .scroll-reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s ease;
+    }
+
+    .scroll-reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
 </head>
 <body>
-    <!-- Navigation -->
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo-box">
+      <img src="img.jpg" class="logo-img" alt="StepUp Logo">
+      <div class="logo-title">Step<span>Up</span></div>
+    </div>
+
     <nav>
-        <a href="home.html" class="logo">StepUp</a>
-        <ul class="nav-links">
-            <li><a href="home.html" class="active">Accueil</a></li>
-            <li><a href="competences.html">Compétences</a></li>
-            <li><a href="projets.html">Projets</a></li>
-            <li><a href="entreprises.html">Entreprises</a></li>
-            <li><a href="about.html">À propos</a></li>
-            <li><a href="login.html" class="nav-btn">Connexion</a></li>
-        </ul>
+      <a href="home.html">Accueil</a>
+      <a href="competences.html">Compétences</a>
+      <a href="projets.html">Projets</a>
+      <a href="entreprises.html">Entreprises</a>
+      <a href="about.html">À propos</a>
+      <a href="index.html" class="btn-login">Connexion</a>
     </nav>
+  </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <h1>Développez vos compétences avec StepUp</h1>
-        <p>La plateforme professionnelle pour apprendre, pratiquer et travailler. Rejoignez des milliers d'apprenants qui transforment leur carrière.</p>
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <h1>Apprends, pratique et travaille</h1>
+    <p>La compétence avant tout</p>
+
+    <button class="btn-start" onclick="window.location.href='index.html'">Commencer maintenant</button>
+
+    <!-- 3 Cards -->
+    <div class="cards">
+      <div class="card">
+        <img src="apprendre.jfif" alt="Apprends">
+        <h3>Apprends</h3>
+        <p>Découvre des cours modernes et interactifs pour développer tes compétences.</p>
+      </div>
+
+      <div class="card">
+        <img src="pratique.jfif" alt="Pratique">
+        <h3>Pratique</h3>
+        <p>Réalise des projets concrets évalués par l'IA pour progresser rapidement.</p>
+      </div>
+
+      <div class="card">
+        <img src="t.jpg" alt="Travaille">
+        <h3>Travaille</h3>
+        <p>Connecte-toi directement avec les entreprises qui recrutent.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <div class="contact">
+    <h3>Contactez-nous</h3>
+    <p>Email : <strong>support@stepup.com</strong></p>
+    <p>Téléphone : <strong>+213 0550 00 00 00</strong></p>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    © 2025 StepUp — Tous droits réservés
+  </footer>
+
+  <script>
+    // Smooth scroll reveal animation
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.scroll-reveal').forEach(el => {
+      observer.observe(el);
+    });
+
+    // Add ripple effect to buttons
+    document.querySelectorAll('.btn-start, .btn-login').forEach(button => {
+      button.addEventListener('click', function(e) {
+        const ripple = document.createElement('span');
+        const rect = this.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        const x = e.clientX - rect.left - size / 2;
+        const y = e.clientY - rect.top - size / 2;
         
-        <div class="cta-buttons">
-            <a href="login.html" class="cta-btn primary">Commencer gratuitement</a>
-            <a href="about.html" class="cta-btn secondary">En savoir plus</a>
-        </div>
-    </section>
+        ripple.style.width = ripple.style.height = size + 'px';
+        ripple.style.left = x + 'px';
+        ripple.style.top = y + 'px';
+        ripple.classList.add('ripple');
+        
+        this.appendChild(ripple);
+        
+        setTimeout(() => ripple.remove(), 600);
+      });
+    });
+  </script>
 
-    <!-- Features Section -->
-    <section class="features">
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon">🎯</div>
-                <h3 class="feature-title">Compétences variées</h3>
-                <p class="feature-description">Accédez à une large gamme de compétences en programmation, design, business et plus encore.</p>
-            </div>
-            
-            <div class="feature-card">
-                <div class="feature-icon">💼</div>
-                <h3 class="feature-title">Projets réels</h3>
-                <p class="feature-description">Travaillez sur des projets concrets pour développer votre portfolio et votre expérience.</p>
-            </div>
-            
-            <div class="feature-card">
-                <div class="feature-icon">🏢</div>
-                <h3 class="feature-title">Réseau d'entreprises</h3>
-                <p class="feature-description">Connectez-vous avec des entreprises partenaires et accédez à des opportunités professionnelles.</p>
-            </div>
-        </div>
-    </section>
-
-    <footer>
-        © 2025 StepUp — Tous droits réservés
-    </footer>
 </body>
 </html>

@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accueil - StepUp</title>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
+        
+        :root {
+            --bg: #0b101a;
+            --accent: #f4c542;
+            --text-primary: #e2e8f0;
+            --text-secondary: #94a3b8;
+            --card-bg: rgba(26, 35, 50, 0.8);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: "Inter", sans-serif;
+            background: linear-gradient(135deg, #0a1929 0%, #1a2332 50%, #0f1419 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1001;
+            background: rgba(10, 25, 41, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(251, 191, 36, 0.1);
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.3s;
+            position: relative;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #f4c542 0%, #f59e0b 100%);
+            transition: 0.3s;
+        }
+        
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+        
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--accent);
+        }
+        
+        .nav-btn {
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            color: var(--bg);
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(251, 191, 36, 0.3);
+        }
+        
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(251, 191, 36, 0.5);
+        }
+        
+        /* Hero Section */
+        .hero {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 150px 50px 80px;
+            text-align: center;
+            animation: fadeInUp 1s ease;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 1.4rem;
+            color: var(--text-secondary);
+            max-width: 800px;
+            margin: 0 auto 40px;
+            line-height: 1.8;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 40px;
+        }
+        
+        .cta-btn {
+            padding: 15px 40px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .cta-btn.primary {
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            color: var(--bg);
+            box-shadow: 0 4px 20px rgba(251, 191, 36, 0.4);
+        }
+        
+        .cta-btn.primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(251, 191, 36, 0.6);
+        }
+        
+        .cta-btn.secondary {
+            background: transparent;
+            color: var(--accent);
+            border: 2px solid var(--accent);
+        }
+        
+        .cta-btn.secondary:hover {
+            background: rgba(251, 191, 36, 0.1);
+            transform: translateY(-3px);
+        }
+        
+        /* Features Section */
+        .features {
+            max-width: 1200px;
+            margin: 80px auto;
+            padding: 0 50px;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .feature-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            padding: 40px 30px;
+            border-radius: 20px;
+            border: 1px solid rgba(251, 191, 36, 0.1);
+            text-align: center;
+            transition: all 0.3s ease;
+            animation: fadeInUp 1s ease;
+            animation-fill-mode: both;
+        }
+        
+        .feature-card:nth-child(1) { animation-delay: 0.2s; }
+        .feature-card:nth-child(2) { animation-delay: 0.3s; }
+        .feature-card:nth-child(3) { animation-delay: 0.4s; }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(251, 191, 36, 0.15);
+            border-color: var(--accent);
+        }
+        
+        .feature-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+        
+        .feature-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+        
+        .feature-description {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+        
+        footer {
+            margin-top: 80px;
+            color: #9aa4b8;
+            font-size: 14px;
+            text-align: center;
+            padding: 20px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        @media (max-width: 768px) {
+            nav {
+                padding: 15px 20px;
+            }
+            
+            .nav-links {
+                gap: 10px;
+                font-size: 0.85rem;
+            }
+            
+            .nav-btn {
+                padding: 8px 15px;
+                font-size: 0.85rem;
+            }
+            
+            .hero {
+                padding: 120px 20px 60px;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .cta-btn {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .features {
+                padding: 0 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <a href="home.html" class="logo">StepUp</a>
+        <ul class="nav-links">
+            <li><a href="home.html" class="active">Accueil</a></li>
+            <li><a href="competences.html">Compétences</a></li>
+            <li><a href="projets.html">Projets</a></li>
+            <li><a href="entreprises.html">Entreprises</a></li>
+            <li><a href="about.html">À propos</a></li>
+            <li><a href="login.html" class="nav-btn">Connexion</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Développez vos compétences avec StepUp</h1>
+        <p>La plateforme professionnelle pour apprendre, pratiquer et travailler. Rejoignez des milliers d'apprenants qui transforment leur carrière.</p>
+        
+        <div class="cta-buttons">
+            <a href="login.html" class="cta-btn primary">Commencer gratuitement</a>
+            <a href="about.html" class="cta-btn secondary">En savoir plus</a>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🎯</div>
+                <h3 class="feature-title">Compétences variées</h3>
+                <p class="feature-description">Accédez à une large gamme de compétences en programmation, design, business et plus encore.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">💼</div>
+                <h3 class="feature-title">Projets réels</h3>
+                <p class="feature-description">Travaillez sur des projets concrets pour développer votre portfolio et votre expérience.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">🏢</div>
+                <h3 class="feature-title">Réseau d'entreprises</h3>
+                <p class="feature-description">Connectez-vous avec des entreprises partenaires et accédez à des opportunités professionnelles.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        © 2025 StepUp — Tous droits réservés
+    </footer>
+</body>
+</html>
